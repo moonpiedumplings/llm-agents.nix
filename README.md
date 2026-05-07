@@ -141,6 +141,16 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 
 </details>
 <details>
+<summary><strong>gastown</strong> - Gas Town - multi-agent workspace manager</summary>
+
+- **Source**: source
+- **License**: MIT
+- **Homepage**: https://github.com/gastownhall/gastown
+- **Usage**: `nix run github:numtide/llm-agents.nix#gastown -- --help`
+- **Nix**: [packages/gastown/package.nix](packages/gastown/package.nix)
+
+</details>
+<details>
 <summary><strong>gemini-cli</strong> - AI agent that brings the power of Gemini directly into your terminal</summary>
 
 - **Source**: source
