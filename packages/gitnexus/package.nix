@@ -27,6 +27,18 @@ buildNpmPackage (finalAttrs: {
 
   postUnpack = ''
     chmod -R u+w source/gitnexus-shared
+    # build.js runs `npm ci && npm run build` inside gitnexus-web (needs
+    # network and a separate lockfile). Drop its package.json so the
+    # build script skips the web UI entirely.
+    chmod -R u+w source/gitnexus-web
+    rm -f source/gitnexus-web/package.json
+  '';
+
+  # build.js invokes a cwd-relative node_modules/.bin/tsc which does not exist
+  # in gitnexus-shared; use the tsc from nativeBuildInputs on PATH instead.
+  postPatch = ''
+    substituteInPlace scripts/build.js \
+      --replace-fail "path.join('node_modules', '.bin', 'tsc')" "'tsc'"
   '';
 
   npmDepsHash = "sha256-BRvS1npNezOKThqQcHa1YKOSNQa5dL582/JszB6vdRI=";
