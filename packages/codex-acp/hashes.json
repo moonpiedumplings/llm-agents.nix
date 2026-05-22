@@ -1,17 +1,17 @@
 {
-  "version": "0.14.0",
-  "hash": "sha256-MjKaJV0VfMXYcH3oaCxscTTMop6tmA5Wl/vpPVDGg0E=",
-  "cargoHash": "sha256-93OyFqWosCktzJZe9rYhpSgTzzlay+HBjST6on0+7VY=",
+  "version": "0.15.0",
+  "hash": "sha256-XSy0qJudzt5ZN9TWQsWhKvfKkPBPAH7vF1RV96P268w=",
+  "cargoHash": "sha256-p1gC5PhulWnAAp/jZpl4Kh1d5ZexAdyB/YPjU5/Ap04=",
   "codexOwner": "openai",
-  "codexRev": "2808a4deb181e5ca2b1293a1a5980938cb746861",
-  "codexSrcHash": "sha256-IvBeuDiP1vMzCGVxi4CWKcYajP+IkNIyHmREO5gz2dU=",
+  "codexRev": "9474e5cfc4494b0ba319352aa86ce436c59e65c8",
+  "codexSrcHash": "sha256-RTxhhZjZ/64N60pmbNVzLwcSBomn67pPDpOjkL6RPUw=",
   "librusty_v8": {
-    "version": "146.4.0",
+    "version": "147.4.0",
     "hashes": {
-      "x86_64-linux": "sha256-5ktNmeSuKTouhGJEqJuAF4uhA4LBP7WRwfppaPUpEVM=",
-      "aarch64-linux": "sha256-2/FlsHyBvbBUvARrQ9I+afz3vMGkwbW0d2mDpxBi7Ng=",
-      "x86_64-darwin": "sha256-YwzSQPG77NsHFBfcGDh6uBz2fFScHFFaC0/Pnrpke7c=",
-      "aarch64-darwin": "sha256-v+LJvjKlbChUbw+WWCXuaPv2BkBfMQzE4XtEilaM+Yo="
+      "x86_64-linux": "sha256-Cd3vbFEZKv/wVBExoO+cAPgxhdI5HaqxgDgqOr82rJU=",
+      "aarch64-linux": "sha256-lMPw/eAFFAT8obaR8opJbXjbgw58+0maBEyxpeOllFU=",
+      "x86_64-darwin": "sha256-+ppR8dMhVTSZL0PPar+DlKZ0K+E5N7WfdXXfBTYel+Y=",
+      "aarch64-darwin": "sha256-fnR0DD7woOj8DiaKJYYSPpg0D+lDVmjNwSiPrvtzYq4="
     }
   }
 }
