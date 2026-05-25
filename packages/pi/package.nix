@@ -22,6 +22,7 @@ let
         hash = versionData.sourceHash;
       }
     } -C $out --strip-components=1
+    rm -f $out/npm-shrinkwrap.json
     cp ${./package-lock.json} $out/package-lock.json
   '';
 in

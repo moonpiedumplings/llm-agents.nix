@@ -45,7 +45,7 @@ def main() -> None:
     source_hash = calculate_url_hash(tarball_url)
 
     if not extract_or_generate_lockfile(tarball_url, SCRIPT_DIR / "package-lock.json"):
-        return
+        sys.exit(1)
 
     # Update hashes.json
     data = {
@@ -64,7 +64,7 @@ def main() -> None:
         save_hashes(HASHES_FILE, data)
     except (ValueError, NixCommandError) as e:
         print(f"Error: {e}")
-        return
+        sys.exit(1)
 
     print(f"Updated to {latest}")
 
