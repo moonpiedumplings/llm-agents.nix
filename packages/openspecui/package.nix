@@ -35,6 +35,14 @@ buildNpmPackage {
   npmDepsHash = versionData.npmDepsHash;
   makeCacheWritable = true;
 
+  # onnxruntime-node's postinstall tries to download native binaries from
+  # nuget.org, which fails in the nix sandbox. Skip all install scripts
+  # during npm rebuild, then selectively rebuild native addons that need it.
+  npmRebuildFlags = [ "--ignore-scripts" ];
+  preBuild = ''
+    npm rebuild better-sqlite3 sharp @parcel/watcher esbuild protobufjs
+  '';
+
   dontNpmBuild = true;
 
   passthru.category = "Workflow & Project Management";
