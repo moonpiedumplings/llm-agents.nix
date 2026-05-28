@@ -471,6 +471,10 @@
     url = "https://registry.npmjs.org/@types/react/-/react-19.2.14.tgz";
     hash = "sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==";
   };
+  "@types/shell-quote@1.7.5" = fetchurl {
+    url = "https://registry.npmjs.org/@types/shell-quote/-/shell-quote-1.7.5.tgz";
+    hash = "sha512-+UE8GAGRPbJVQDdxi16dgadcBfQ+KG2vgZhV1+3A1XmHbmwcdwhCUwIdy+d3pAGrbvgRoVSjeI9vOWyq376Yzw==";
+  };
   "@types/unist@3.0.3" = fetchurl {
     url = "https://registry.npmjs.org/@types/unist/-/unist-3.0.3.tgz";
     hash = "sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==";
@@ -1010,6 +1014,10 @@
   "string-width@8.2.0" = fetchurl {
     url = "https://registry.npmjs.org/string-width/-/string-width-8.2.0.tgz";
     hash = "sha512-6hJPQ8N0V0P3SNmP6h2J99RLuzrWz2gvT7VnK5tKvrNqJoyS9W4/Fb8mo31UiPvy00z7DQXkP2hnKBVav76thw==";
+  };
+  "string-width@8.2.1" = fetchurl {
+    url = "https://registry.npmjs.org/string-width/-/string-width-8.2.1.tgz";
+    hash = "sha512-IIaP0g3iy9Cyy18w3M9YcaDudujEAVHKt3a3QJg1+sr/oX96TbaGUubG0hJyCjCBThFH+tFpcIyoUHUn1ogaLA==";
   };
   "string_decoder@1.3.0" = fetchurl {
     url = "https://registry.npmjs.org/string_decoder/-/string_decoder-1.3.0.tgz";
