@@ -384,6 +384,16 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 
 </details>
 <details>
+<summary><strong>hermes-hud</strong> - TUI consciousness monitor for Hermes Agent</summary>
+
+- **Source**: source
+- **License**: MIT
+- **Homepage**: https://github.com/joeynyc/hermes-hud
+- **Usage**: `nix run github:numtide/llm-agents.nix#hermes-hud -- --help`
+- **Nix**: [packages/hermes-hud/package.nix](packages/hermes-hud/package.nix)
+
+</details>
+<details>
 <summary><strong>localgpt</strong> - Local AI assistant with persistent markdown memory, autonomous tasks, and semantic search</summary>
 
 - **Source**: source
