@@ -17,11 +17,11 @@
 
 stdenv.mkDerivation rec {
   pname = "memvid-cli";
-  version = "2.0.159";
+  version = "2.0.160";
 
   src = fetchzip {
     url = "https://registry.npmjs.org/@memvid/cli-linux-x64/-/cli-linux-x64-${version}.tgz";
-    hash = "sha256-BiqygCVYkoQq2vqmI6DE0ME9t99wb6pZZe/NKkjCXis=";
+    hash = "sha256-we0KZzKrYRATJElP9OkR4hERQ5S+Zb9qFDCO3WJtV/I=";
   };
 
   nativeBuildInputs = [
