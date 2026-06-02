@@ -571,7 +571,7 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 
 - **Source**: source
 - **License**: MIT
-- **Homepage**: https://github.com/steveyegge/beads
+- **Homepage**: https://github.com/gastownhall/beads
 - **Usage**: `nix run github:numtide/llm-agents.nix#beads -- --help`
 - **Nix**: [packages/beads/package.nix](packages/beads/package.nix)
 
