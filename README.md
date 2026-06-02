@@ -427,13 +427,13 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 ### Claude Code Ecosystem
 
 <details>
-<summary><strong>auto-claude</strong> - Autonomous multi-agent coding framework powered by Claude AI</summary>
+<summary><strong>aperant</strong> - Autonomous multi-agent coding framework powered by Claude AI</summary>
 
 - **Source**: source
 - **License**: AGPL-3.0-only
-- **Homepage**: https://github.com/AndyMik90/Auto-Claude
-- **Usage**: `nix run github:numtide/llm-agents.nix#auto-claude -- --help`
-- **Nix**: [packages/auto-claude/package.nix](packages/auto-claude/package.nix)
+- **Homepage**: https://github.com/AndyMik90/Aperant
+- **Usage**: `nix run github:numtide/llm-agents.nix#aperant -- --help`
+- **Nix**: [packages/aperant/package.nix](packages/aperant/package.nix)
 
 </details>
 <details>
