@@ -26,7 +26,11 @@ PLATFORMS = {
 }
 
 VERSION_URL = "https://cursor.com/install"
-VERSION_PATTERN = r"downloads\.cursor\.com/lab/([0-9]{4}\.[0-9]{2}\.[0-9]{2}-[a-f0-9]+)"
+# Build id suffix can contain hyphens (e.g. 2026.06.15-18-00-12-6f5a2cf);
+# match them and anchor on the trailing path separator.
+VERSION_PATTERN = (
+    r"downloads\.cursor\.com/lab/([0-9]{4}\.[0-9]{2}\.[0-9]{2}-[0-9a-f-]+)/"
+)
 
 
 def main() -> None:
