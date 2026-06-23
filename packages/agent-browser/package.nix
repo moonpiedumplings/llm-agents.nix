@@ -44,7 +44,7 @@ let
       pname = "${pname}-dashboard";
       inherit version src;
       pnpm = pnpm_11;
-      hash = "sha256-hSmlZvGlnvSWpCki1eImUNEe1myfbC3eDVcX07k0Bm4=";
+      hash = "sha256-5p+wwu2SBLJ3uBVFCFpq+tJbfTGU7Kd+qa4CXhIqlLg=";
       fetcherVersion = 3;
     };
 
@@ -123,7 +123,10 @@ rustPlatform.buildRustPackage {
       --set AGENT_BROWSER_EXECUTABLE_PATH ${chromium}/bin/chromium
   '';
 
-  passthru.category = "Utilities";
+  passthru = {
+    inherit dashboard;
+    category = "Utilities";
+  };
 
   meta = {
     description = "Headless browser automation CLI for AI agents";
