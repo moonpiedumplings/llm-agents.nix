@@ -1,5 +1,6 @@
 {
   lib,
+  flake,
   stdenv,
   fetchFromGitHub,
   fetchPnpmDeps,
@@ -84,6 +85,7 @@ stdenv.mkDerivation (finalAttrs: {
     changelog = "https://github.com/mindfold-ai/trellis/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.agpl3Only;
     sourceProvenance = with lib.sourceTypes; [ fromSource ];
+    maintainers = with flake.lib.maintainers; [ hobr ];
     mainProgram = "trellis";
     platforms = lib.platforms.all;
   };
