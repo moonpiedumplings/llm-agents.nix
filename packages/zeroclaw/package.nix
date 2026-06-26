@@ -51,10 +51,14 @@ let
     # renders the gateway's OpenAPI spec and pipes it through openapi-typescript.
     # It is only re-exported as a type from api.ts and never consumed elsewhere,
     # so stub it instead of pulling the whole Rust toolchain into the frontend.
+    # The stubs use `any` because api.ts indexes nested members (e.g.
+    # components["schemas"]["ConfigApiCode"]); a `Record<string, unknown>` stub
+    # makes the inner access fail with TS2339.
     postPatch = ''
       cat > src/lib/api-generated.ts <<'EOF'
-      export type paths = Record<string, unknown>;
-      export type components = Record<string, unknown>;
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+      export type paths = any;
+      export type components = any;
       EOF
     '';
 
