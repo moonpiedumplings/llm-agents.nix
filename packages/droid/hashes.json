@@ -1,13 +1,13 @@
 {
-  "version": "0.158.0",
+  "version": "0.159.0",
   "droid": {
-    "aarch64-darwin": "sha256-03qU9ErUsRXFvcVuVXakL5PQ7OxksRahJkQCQLXpNzs=",
-    "aarch64-linux": "sha256-/p0GtMATat0GGdlkr7PawsybE6xsDkSPEWkddJIDxYQ=",
-    "x86_64-linux": "sha256-9kpVu20xTI2SUGPOdByXeWII7w+s3UtPGIGjWKy2aNg="
+    "x86_64-linux": "sha256-NaJeXauwEsY6F6Ad3VF+nVb81Ds+HAiHPQB77HmMGpM=",
+    "aarch64-linux": "sha256-NuZfFdh7FcJJ4dZ8HvWBBhoOLWkqnLDlJ3yENKdy3l0=",
+    "aarch64-darwin": "sha256-fgJdILpu6QoY5TrlQOUcS9rCp9IN8Z/R+p2/1NvllO0="
   },
   "ripgrep": {
-    "aarch64-linux": "sha256-Js5szrF6xxDuclPEnqglxhjU+eSaE11StO3OM2xA9iA=",
     "aarch64-darwin": "sha256-Jz6MZQpCvuwShJEOGCW2Gj5698DOH87BN/4dbMcd77c=",
+    "aarch64-linux": "sha256-Js5szrF6xxDuclPEnqglxhjU+eSaE11StO3OM2xA9iA=",
     "x86_64-linux": "sha256-viR2yXY0K5IWYRtKhMG8LsZIjsXHkeoBmhMnJ2RO8Zw="
   }
 }
