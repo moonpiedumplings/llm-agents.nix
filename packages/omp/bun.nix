@@ -1907,10 +1907,6 @@
     url = "https://registry.npmjs.org/sharp/-/sharp-0.34.5.tgz";
     hash = "sha512-Ou9I5Ft9WNcCbXrU9cMgPBcCK8LiwLqcbywW3t4oDV37n1pzpuNLsYiAV8eODnjbtQlSDwZ2cUEeQz4E54Hltg==";
   };
-  "sherpa-onnx-darwin-arm64@1.12.37" = fetchurl {
-    url = "https://registry.npmjs.org/sherpa-onnx-darwin-arm64/-/sherpa-onnx-darwin-arm64-1.12.37.tgz";
-    hash = "sha512-zpqbH+2TI6dvg7mxGm30Mnv17aJL3ZfRGshMiBK85dHBfhzqMbKUHNXCzsHhiKBQTzti6JqG1YoRbYrJwvdUjA==";
-  };
   "sherpa-onnx-darwin-arm64@1.13.3" = fetchurl {
     url = "https://registry.npmjs.org/sherpa-onnx-darwin-arm64/-/sherpa-onnx-darwin-arm64-1.13.3.tgz";
     hash = "sha512-9x86Cbf+BDFONdtCPM3cnjvtAW0ER8tMaHK5pVfz+SHPt8GeuwRXaiR/BzcByFBUyxCgmceO09/WMZOCi44P/g==";
@@ -1927,10 +1923,6 @@
     url = "https://registry.npmjs.org/sherpa-onnx-linux-x64/-/sherpa-onnx-linux-x64-1.13.3.tgz";
     hash = "sha512-OFVK0GYwKwKNsjxbPmfcLQm/dfA0IwAoiIQJ96s+eFYcDqhlapcY06ocdb7SNluGBcM7xgU5jEW2QXBkMIOEvQ==";
   };
-  "sherpa-onnx-node@1.12.37" = fetchurl {
-    url = "https://registry.npmjs.org/sherpa-onnx-node/-/sherpa-onnx-node-1.12.37.tgz";
-    hash = "sha512-SpblPUl/ODliBk4WzKLRa0VPyc30I3HU9U/qRUmhya7eTNLkJE8sQOmj2kvRL8k2cWrHES2pyvRwwq1jT/MPpw==";
-  };
   "sherpa-onnx-node@1.13.2" = fetchurl {
     url = "https://registry.npmjs.org/sherpa-onnx-node/-/sherpa-onnx-node-1.13.2.tgz";
     hash = "sha512-uIH6SA5Or4pb8HlCYWB3K54XkMtzdef4/tkw1amtIf8GB1tt6hQLpur9p2jSFNfTYRyzZ8XrXofxefXQ0A7EUA==";
@@ -1943,9 +1935,9 @@
     url = "https://registry.npmjs.org/sherpa-onnx-win-x64/-/sherpa-onnx-win-x64-1.13.3.tgz";
     hash = "sha512-ZQzcSmFvZK4jzmtWckqxocDUuEjYnBV2MHrDD21HPTeUMfGdE9yfvuSPpesIVfdzKbQzIQY42RAcfZEGWu0FbQ==";
   };
-  "sherpa-onnx@1.12.37" = fetchurl {
-    url = "https://registry.npmjs.org/sherpa-onnx/-/sherpa-onnx-1.12.37.tgz";
-    hash = "sha512-3luwSdHwR8BtJiiFwqHfb15FE2FX0KsN4aOBbfq9Ma23r3w9C3bprFc/WBusXk56nUbzcEN5YczN7t9w1JwdtQ==";
+  "sherpa-onnx@1.13.2" = fetchurl {
+    url = "https://registry.npmjs.org/sherpa-onnx/-/sherpa-onnx-1.13.2.tgz";
+    hash = "sha512-hheOLl4JlOzERco73u+1Q/LaNDdFChDe4r3+IlMYIO3wggBZrReHDSxWwRUIW+YLw3eLslyiXw/hfb75aOylEA==";
   };
   "signal-exit@4.1.0" = fetchurl {
     url = "https://registry.npmjs.org/signal-exit/-/signal-exit-4.1.0.tgz";
