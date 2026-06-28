@@ -6,6 +6,7 @@
   patchelf,
   cacert,
   versionCheckHook,
+  versionCheckHomeHook,
 }:
 
 let
@@ -77,7 +78,12 @@ stdenv.mkDerivation (finalAttrs: {
     '';
 
   doInstallCheck = true;
-  nativeInstallCheckInputs = [ versionCheckHook ];
+  # The Node SEA self-extracts its bundled package into $HOME on first run, so
+  # the version check needs a writable HOME.
+  nativeInstallCheckInputs = [
+    versionCheckHook
+    versionCheckHomeHook
+  ];
   versionCheckProgramArg = [ "--version" ];
 
   passthru.category = "AI Coding Agents";
