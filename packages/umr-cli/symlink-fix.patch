@@ -1,0 +1,94 @@
+diff --git a/packages/core/src/sources/path-source.ts b/packages/core/src/sources/path-source.ts
+index 2dab5fb..df54836 100644
+--- a/packages/core/src/sources/path-source.ts
++++ b/packages/core/src/sources/path-source.ts
+@@ -1,4 +1,4 @@
+-import { stat } from "node:fs/promises";
++import { realpath, stat } from "node:fs/promises";
+ import path from "node:path";
+ 
+ import { ManagerError } from "../errors";
+@@ -44,7 +44,8 @@ export class PathSourceAdapter implements SourceAdapter<PathSourceInput> {
+       });
+     }
+ 
+-    const details = await stat(localPath);
++    const resolvedPath = await realpath(localPath);
++    const details = await stat(resolvedPath);
+     if (details.isDirectory()) {
+       throw new ManagerError(NON_GGUF_MESSAGE, {
+         code: "unsupported-model-format",
+@@ -52,7 +53,7 @@ export class PathSourceAdapter implements SourceAdapter<PathSourceInput> {
+       });
+     }
+ 
+-    if (!localPath.toLowerCase().endsWith(".gguf")) {
++    if (!resolvedPath.toLowerCase().endsWith(".gguf")) {
+       throw new ManagerError(NON_GGUF_MESSAGE, {
+         code: "unsupported-model-format",
+         exitCode: 2,
+@@ -61,22 +62,23 @@ export class PathSourceAdapter implements SourceAdapter<PathSourceInput> {
+ 
+     await emitInfo(
+       context?.reporter,
+-      `Validating GGUF header for ${localPath}`,
++      `Validating GGUF header for ${resolvedPath}`,
+     );
+-    const header = await readGGUFHeader(localPath);
+-    const relPath = path.basename(localPath);
++    const header = await readGGUFHeader(resolvedPath);
++    const relPath = path.basename(resolvedPath);
+ 
+     return {
+       format: header.format,
+       metadata: {},
+       provenance: {
+         originalPath: localPath,
++        resolvedPath,
+       },
+       storeStrategy: "copy",
+       entryRelPath: relPath,
+       members: [
+         {
+-          sourcePath: localPath,
++          sourcePath: resolvedPath,
+           relPath,
+         },
+       ],
+diff --git a/packages/core/test/manager.test.ts b/packages/core/test/manager.test.ts
+index 1a8153f..183468d 100644
+--- a/packages/core/test/manager.test.ts
++++ b/packages/core/test/manager.test.ts
+@@ -1,4 +1,4 @@
+-import { mkdir, mkdtemp, rename } from "node:fs/promises";
++import { mkdir, mkdtemp, rename, symlink } from "node:fs/promises";
+ import { tmpdir } from "node:os";
+ import path from "node:path";
+ 
+@@ -46,6 +46,26 @@ test("add path copies into managed model root and survives source move", async (
+   expect(umr.getModel(added.model.name).ref).toBe(added.model.ref);
+ });
+ 
++test("add path follows symlinks to GGUF targets", async () => {
++  const dir = await mkdtemp(path.join(tmpdir(), "umr-symlink-"));
++  const sourceDir = path.join(dir, "source");
++  await mkdir(sourceDir, { recursive: true });
++  const targetPath = path.join(sourceDir, "tiny.gguf");
++  const symlinkPath = path.join(sourceDir, "tiny-link");
++  await createTestGGUF(targetPath);
++  await symlink(targetPath, symlinkPath);
++
++  const umr = createVMR(path.join(dir, "home"));
++  const added = await umr.addSource("path", { path: symlinkPath });
++
++  expect(added.model.name).toBe("tiny");
++  expect(added.model.entryFilename).toBe("tiny.gguf");
++  const pathSource = added.model.sources.find((source) => source.kind === "path");
++  expect(pathSource).toBeTruthy();
++  expect(pathSource?.payload.originalPath).toBe(path.resolve(symlinkPath));
++  expect(pathSource?.payload.resolvedPath).toBe(path.resolve(targetPath));
++});
++
+ test("add path emits transfer progress while copying into UMR storage", async () => {
+   const dir = await mkdtemp(path.join(tmpdir(), "umr-copy-progress-"));
+   const sourceDir = path.join(dir, "source");

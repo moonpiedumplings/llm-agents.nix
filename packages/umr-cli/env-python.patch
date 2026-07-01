@@ -1,0 +1,21 @@
+diff --git a/packages/core/src/sources/hf-source.ts b/packages/core/src/sources/hf-source.ts
+index b3c2e48..db20d25 100644
+--- a/packages/core/src/sources/hf-source.ts
++++ b/packages/core/src/sources/hf-source.ts
+@@ -45,11 +45,13 @@ function formatGGUFFiles(files: string[]): string {
+ }
+ 
+ async function resolvePythonCommand(runner: CommandRunner): Promise<string> {
+-  if (await runner.commandExists("python")) {
++  if (await process.env.UMR_PYTHON !== undefined) {
++    return process.env.UMR_PYTHON;
++  }
++  else if (await runner.commandExists("python")) {
+     return "python";
+   }
+-
+-  if (await runner.commandExists("python3")) {
++  else if (await runner.commandExists("python3")) {
+     return "python3";
+   }
+ 

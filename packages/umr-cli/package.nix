@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   flake,
   stdenv,
@@ -11,22 +12,37 @@
 let
   versionData = builtins.fromJSON (builtins.readFile ./hashes.json);
   inherit (versionData) version hash;
+  pythonDeps =
+    ps: with ps; [
+      huggingface-hub
+    ];
+  pythonDist = (pkgs.python314.withPackages pythonDeps);
 in
 stdenv.mkDerivation rec {
   pname = "umr-cli";
   inherit version;
 
-  src = (fetchFromGitHub {
-    owner = "EvanZhouDev";
-    repo = "umr";
-    rev = "998a4a9d251933a8c8df801396105f6f87c8e3b4";
-    inherit hash;
-  });
-  packageJson = "${src}/package.json";
+  src = (
+    fetchFromGitHub {
+      owner = "EvanZhouDev";
+      repo = "umr";
+      rev = "998a4a9d251933a8c8df801396105f6f87c8e3b4";
+      inherit hash;
+    }
+  );
+
+  patches = [
+    ./env-python.patch
+    ./symlink-fix.patch
+  ];
 
   nativeBuildInputs = [
     bun2nix.hook
     makeWrapper
+  ];
+
+  propagatedBuildInputs = [
+    pythonDist
   ];
 
   bunDeps = bun2nix.fetchBunDeps {
@@ -37,17 +53,20 @@ stdenv.mkDerivation rec {
     # };
   };
 
-  module = "${src}/apps/cli/index.ts";
-
   buildPhase = ''
-    bun build apps/cli/src/cli.ts --compile --outfile umr
+    bun build --compile ./apps/cli/src/index.ts --outfile umr
   '';
 
-  installPhase = ''
-    ls -la
+  dontStrip = true;
 
+  installPhase = ''
     mkdir -p $out/bin
-    cp umr $out/bin/
+    cp ./umr $out/bin/
+  '';
+
+  preFixup = ''
+    wrapProgram $out/bin/umr \
+          --set-default UMR_PYTHON ${lib.getExe pythonDist}
   '';
 
   passthru.category = "Workflow & Project Management";
