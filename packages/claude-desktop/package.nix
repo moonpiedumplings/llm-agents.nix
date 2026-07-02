@@ -59,13 +59,10 @@
 let
   pname = "claude-desktop";
 
-  # The version, download URLs, and hashes live in the sibling hashes.json,
-  # which update.py refreshes from Anthropic's APT index.
+  # update.py refreshes version/urls/hashes from Anthropic's APT index.
   versionData = builtins.fromJSON (builtins.readFile ./hashes.json);
   inherit (versionData) version urls hashes;
 
-  # Anthropic publish separate Debian packages per architecture, and the two
-  # arches may sit at different versions when one lags behind the other.
   platform = stdenvNoCC.hostPlatform.system;
 
   deps = [
@@ -103,10 +100,7 @@ let
     wayland
   ];
 
-  # The desktop entry reproduces the one Anthropic ship in the deb. The
-  # x-scheme-handler/claude MIME type registers the OAuth sign-in handler and
-  # must be preserved, and the two actions expose the New chat and New Claude
-  # Code session shortcuts.
+  # x-scheme-handler/claude registers the OAuth sign-in handler.
   desktopItem = makeDesktopItem {
     name = "claude-desktop";
     desktopName = "Claude";
@@ -149,8 +143,7 @@ let
   meta = with lib; {
     description = "Desktop application for Claude.ai";
     homepage = "https://claude.ai";
-    # Anthropic publish no versioned changelog or release tags for Claude
-    # Desktop, so this points at the canonical download and what's-new page.
+    # No upstream versioned changelog or release tags exist.
     changelog = "https://claude.ai/download";
     license = licenses.unfree;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
@@ -202,28 +195,24 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    # The whole Electron application ships under usr/lib; keep the upstream
-    # layout so bundled libraries such as libffmpeg.so resolve next to the
-    # main binary.
+    # Keep the upstream usr/lib layout so bundled libs (e.g. libffmpeg.so)
+    # resolve next to the main binary.
     mkdir -p $out/lib $out/bin $out/share
     cp -a usr/lib/claude-desktop $out/lib/claude-desktop
     cp -a usr/share/icons $out/share/icons
     cp -a usr/share/doc $out/share/doc
 
-    # The rpath must include the application directory so ANGLE and the bundled
-    # GL and Vulkan libraries can find each other and the system libGL.
+    # Include the app dir so ANGLE and the bundled GL/Vulkan libs find each
+    # other and the system libGL.
     app_rpath="$rpath:$out/lib/claude-desktop"
 
-    # Patch every dynamic ELF payload in the application tree. The interpreter
-    # and rpath fail on the statically linked cowork-linux-helper and on the
-    # smol-bin.x64.img disk image, so tolerate those failures.
+    # Patch every dynamic ELF in the app tree; tolerate failures on the
+    # statically linked cowork-linux-helper and the smol-bin.x64.img image.
     while IFS= read -r -d "" elf; do
       patchelf --set-interpreter ${bintools.dynamicLinker} "$elf" 2>/dev/null || true
       patchelf --set-rpath "$app_rpath" "$elf" 2>/dev/null || true
     done < <(find $out/lib/claude-desktop -type f \( -name "*.so" -o -name "*.so.*" -o -name "*.node" -o -executable \) -print0)
 
-    # The desktop file uses bare Exec and Icon names, so copyDesktopItems
-    # installs the generated item and the wrapper lands at $out/bin/claude-desktop.
     makeWrapper "$out/lib/claude-desktop/claude-desktop" "$out/bin/claude-desktop" \
       --prefix LD_LIBRARY_PATH : "$app_rpath" \
       --suffix PATH : "${lib.makeBinPath [ xdg-utils ]}" \

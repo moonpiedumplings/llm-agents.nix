@@ -13,14 +13,11 @@ own and the top-level version follows x86_64-linux.
 import sys
 from pathlib import Path
 
-# The shared updater library lives in the repository's scripts directory.
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 
 from updater import fetch_text, load_hashes, save_hashes, should_update
 from updater.hash import hex_to_sri
 
-# The APT repository base, the dist index base, and the arch name mapping from
-# Nix system to Debian architecture.
 APT_BASE = "https://downloads.claude.ai/claude-desktop/apt/stable"
 DIST_BASE = APT_BASE + "/dists/stable/main"
 PLATFORMS = {"x86_64-linux": "amd64", "aarch64-linux": "arm64"}
@@ -29,11 +26,7 @@ HASHES_FILE = Path(__file__).parent / "hashes.json"
 
 
 def parse_version(version: str) -> tuple[int, ...]:
-    """Turn a dotted version string into a tuple of integers for sorting.
-
-    Non-numeric components fall back to zero so that comparison never fails on
-    an unexpected version string.
-    """
+    """Turn a dotted version into an int tuple for sorting (non-numeric -> 0)."""
     parts = []
     for part in version.split("."):
         try:
@@ -44,11 +37,10 @@ def parse_version(version: str) -> tuple[int, ...]:
 
 
 def latest_for_arch(arch: str) -> tuple[str, str, str]:
-    """Fetch the Packages index for one arch and return its newest release.
+    """Return (version, filename, sha256_hex) of the newest release for arch.
 
-    The index holds one RFC822-style stanza per published version, separated by
-    blank lines. This returns the (version, filename, sha256_hex) triple for the
-    highest version. It raises when the index yields no usable stanza.
+    The Packages index holds one RFC822-style stanza per published version,
+    separated by blank lines.
     """
     text = fetch_text(f"{DIST_BASE}/binary-{arch}/Packages")
 
@@ -88,8 +80,7 @@ def main() -> None:
 
     new_version = versions["x86_64-linux"]
 
-    # Update when the top-level version rises, or when any per-arch URL or hash
-    # changed (this catches an arm64 bump while amd64 stays put).
+    # Also catch an arm64-only bump while amd64 stays put.
     changed = (
         should_update(current.get("version", ""), new_version)
         or urls != current.get("urls", {})
