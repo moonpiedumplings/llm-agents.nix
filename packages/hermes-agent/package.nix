@@ -200,6 +200,7 @@ let
       edge-tts
       # Skills Hub
       pyjwt
+      cryptography
     ]
     # faster-whisper -> av SIGKILLs during import on darwin; voice is optional.
     ++ lib.optionals stdenv.hostPlatform.isLinux [ faster-whisper ]
@@ -330,6 +331,7 @@ python3.pkgs.buildPythonApplication {
     "pathspec"
     "firecrawl-py"
     "pyjwt"
+    "cryptography"
     "certifi"
     "packaging"
     "urllib3"
