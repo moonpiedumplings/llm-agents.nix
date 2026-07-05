@@ -19,3 +19,5 @@ jobs:
         uses: NixOS/nix-installer-action@main
       - name: Run ast-grep lint rules
         run: nix build --print-build-logs '.#checks.x86_64-linux.ast-grep'
+      - name: Check package metadata completeness
+        run: nix build --print-build-logs '.#checks.x86_64-linux.meta-completeness'
