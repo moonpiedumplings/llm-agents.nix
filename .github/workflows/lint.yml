@@ -16,6 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
       - name: Setup Nix
-        uses: cachix/install-nix-action@v31
+        uses: NixOS/nix-installer-action@main
       - name: Run ast-grep lint rules
         run: nix build --print-build-logs '.#checks.x86_64-linux.ast-grep'
