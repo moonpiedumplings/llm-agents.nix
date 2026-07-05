@@ -1,0 +1,53 @@
+diff --git a/core/__init__.py b/core/__init__.py
+index 87246cc..8719a7a 100644
+--- a/core/__init__.py
++++ b/core/__init__.py
+@@ -4,32 +4,30 @@ quiet = False
+ debug = False
+ debug_stream = False
+ 
+-from core.functions import *
+ import core.exceptions
++from core.functions import *
++
++if "XDG_CONFIG_HOME" in os.environ:
++    user_module_path = f"{os.getenv('XDG_CONFIG_HOME')}/openlumara/user_modules"
++else:
++    user_module_path = f"{os.getenv('HOME')}/.config/openlumara/user_modules"
+ 
+-user_module_path = core.get_path("user_modules")
+ if not os.path.exists(user_module_path):
+     os.makedirs(user_module_path, exist_ok=True)
+ 
+-user_channel_path = core.get_path("user_channels")
++if "XDG_CONFIG_HOME" in os.environ:
++    user_channel_path = f"{os.getenv('XDG_CONFIG_HOME')}/openlumara/channels"
++else:
++    user_channel_path = f"{os.getenv('HOME')}/.config/openlumara/channels"
++
+ if not os.path.exists(user_channel_path):
+     os.makedirs(user_channel_path, exist_ok=True)
+ 
+ # wtf tiktoken?! apparentely you don't work offline... might need to switch off it ASAP
+-cache_dir = core.get_path(".tiktoken_cache")
++if "XDG_CACHE_HOME" in os.environ:
++    cache_dir = f"{os.getenv('XDG_CONFIG_HOME')}/openlumara/tiktoken"
++else:
++    cache_dir = f"{os.getenv('HOME')}/.cache/openlumara/tiktoken"
++
+ os.makedirs(cache_dir, exist_ok=True)
+ os.environ["TIKTOKEN_CACHE_DIR"] = cache_dir
+-
+-import core.config
+-import core.storage
+-import core.module
+-import core.commands
+-import core.context
+-import core.toolcalls
+-import core.chat
+-import core.channel
+-
+-import core.modules
+-import core.api_client
+-
+-import core.manager

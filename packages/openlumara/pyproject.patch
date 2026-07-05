@@ -1,0 +1,20 @@
+diff --git a/pyproject.toml b/pyproject.toml
+new file mode 100644
+index 0000000..d5f46b0
+--- /dev/null
++++ b/pyproject.toml
+@@ -0,0 +1,14 @@
++[project]
++name = "openlumara"
++version = "0.1.0"
++
++[project.scripts]
++openlumara = "main:main"
++
++[build-system]
++requires = ["setuptools", "wheel"]
++build-backend = "setuptools.build_meta"
++
++[tool.setuptools.packages.find]
++where = ["src"]
++namespaces = true

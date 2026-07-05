@@ -1,0 +1,15 @@
+[project]
+name = "openlumara"
+version = "0.1.0"
+
+[project.scripts]
+openlumara = "openlumara.main:main"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["openlumara*"]
+namespaces = true
