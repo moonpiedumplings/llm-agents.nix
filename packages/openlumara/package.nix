@@ -5,24 +5,27 @@
   fetchFromGitHub,
   versionCheckHook,
   versionCheckHomeHook,
+  stdenv,
+  runtimeShell,
+  makeWrapper,
 }:
 let
-  x = true;
-  # pythonDeps =
-  #   ps: with ps; [
-  #     jupyter-core
-  #     pyyaml
-  #     nbformat
-  #     nbclient
-  #     ipykernel
-  #     requests
-  #   ];
-  # pythonDist = (python3.withPackages pythonDeps);
+  pythonDeps =
+    ps: with ps; [
+      openai
+      tiktoken
+      msgpack
+      pyyaml
+      json-repair
+      python-ulid
+      requests
+      httpx
+    ];
+  pythonDist = (python3.withPackages pythonDeps);
 in
-python3.pkgs.buildPythonApplication rec {
+stdenv.mkDerivation rec {
   pname = "openlumara";
   version = "dev";
-  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "Rose22";
@@ -31,36 +34,26 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-fp7dUHbbN/XHMDZ2VVyuvDx9OGkR8VhuVrh24tXGj+Y=";
   };
 
+  dontBuild = true;
+
+  buildInputs = [ makeWrapper ];
+
   patches = [
-    #./pyproject.patch
     ./core_path.patch
   ];
 
-  postUnpack = ''
-    cp ${./pyproject.toml} source/pyproject.toml
+  installPhase = ''
+    mkdir -p $out/bin
+    mkdir -p $out/share/openlumara
+
+    # Install the sources
+    cp -r . $out/share/openlumara
+
+    # Main executable
+    makeWrapper ${pythonDist}/bin/python $out/bin/openlumara \
+       --add-flags "$out/share/openlumara/main.py" \
+       --run 'export PYTHONPATH="$HOME/.config/openlumara:$PYTHONPATH"'
   '';
-
-  build-system = with python3.pkgs; [
-    setuptools
-  ];
-
-  dependencies = with python3.pkgs; [
-    openai
-    tiktoken
-    msgpack
-    pyyaml
-    json-repair
-    python-ulid
-    requests
-    httpx
-  ];
-
-  doInstallCheck = true;
-
-  # nativeInstallCheckInputs = [
-  #   versionCheckHook
-  #   versionCheckHomeHook
-  # ];
 
   passthru.category = "AI Assistants";
 

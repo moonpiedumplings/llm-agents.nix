@@ -1,8 +1,8 @@
 diff --git a/core/__init__.py b/core/__init__.py
-index 87246cc..8719a7a 100644
+index 87246cc..f3292a3 100644
 --- a/core/__init__.py
 +++ b/core/__init__.py
-@@ -4,32 +4,30 @@ quiet = False
+@@ -4,32 +4,42 @@ quiet = False
  debug = False
  debug_stream = False
  
@@ -21,9 +21,9 @@ index 87246cc..8719a7a 100644
  
 -user_channel_path = core.get_path("user_channels")
 +if "XDG_CONFIG_HOME" in os.environ:
-+    user_channel_path = f"{os.getenv('XDG_CONFIG_HOME')}/openlumara/channels"
++    user_channel_path = f"{os.getenv('XDG_CONFIG_HOME')}/openlumara/user_channels"
 +else:
-+    user_channel_path = f"{os.getenv('HOME')}/.config/openlumara/channels"
++    user_channel_path = f"{os.getenv('HOME')}/.config/openlumara/user_channels"
 +
  if not os.path.exists(user_channel_path):
      os.makedirs(user_channel_path, exist_ok=True)
@@ -37,12 +37,16 @@ index 87246cc..8719a7a 100644
 +
  os.makedirs(cache_dir, exist_ok=True)
  os.environ["TIKTOKEN_CACHE_DIR"] = cache_dir
--
+ 
 -import core.config
 -import core.storage
 -import core.module
--import core.commands
--import core.context
++import core.api_client
++import core.channel
++import core.chat
+ import core.commands
++import core.config
+ import core.context
 -import core.toolcalls
 -import core.chat
 -import core.channel
@@ -50,4 +54,8 @@ index 87246cc..8719a7a 100644
 -import core.modules
 -import core.api_client
 -
--import core.manager
+ import core.manager
++import core.module
++import core.modules
++import core.storage
++import core.toolcalls
