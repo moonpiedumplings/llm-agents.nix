@@ -46,9 +46,14 @@
   libnotify,
   libpulseaudio,
   libayatana-appindicator,
+  libXcursor,
   pipewire,
   wayland,
   xdg-utils,
+
+  # Needed by the bundled virtiofsd, which backs Cowork's virtual machines.
+  libcap_ng,
+  libseccomp,
 
   # Needed for XDG_ICON_DIRS and GSETTINGS_SCHEMAS_PATH.
   adwaita-icon-theme,
@@ -155,11 +160,14 @@ stdenvNoCC.mkDerivation {
     glib
     gsettings-desktop-schemas
     gtk3
+    libcap_ng
     libdrm
     libgbm
+    libseccomp
     libX11
     libxcb
     libXcomposite
+    libXcursor
     libXdamage
     libXext
     libXfixes
