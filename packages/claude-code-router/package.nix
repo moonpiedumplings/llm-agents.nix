@@ -75,7 +75,10 @@ buildNpmPackage (finalAttrs: {
   doInstallCheck = true;
   installCheckPhase = ''
     runHook preInstallCheck
-    HOME=$TMPDIR $out/bin/ccr help 2>&1 | grep -q "Configure at least one provider"
+    # ccr exits non-zero on the guard message; capture instead of piping
+    # so stdenv's pipefail does not fail the phase before grep runs.
+    output=$(HOME=$TMPDIR $out/bin/ccr help 2>&1 || true)
+    grep -q "Configure at least one provider" <<<"$output"
     runHook postInstallCheck
   '';
 
