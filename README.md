@@ -640,7 +640,7 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 <summary><strong>but</strong> - GitButler CLI - virtual branches and AI-assisted Git workflow from the terminal</summary>
 
 - **Source**: source
-- **License**: Check package
+- **License**: FSL-1.1-MIT
 - **Homepage**: https://github.com/gitbutlerapp/gitbutler
 - **Usage**: `nix run github:numtide/llm-agents.nix#but -- --help`
 - **Nix**: [packages/but/package.nix](packages/but/package.nix)
@@ -1319,44 +1319,6 @@ Add to your system configuration:
 > get the combination we ship in CI — and lets you pull pre-built binaries
 > from our [binary cache](#binary-cache) instead of rebuilding everything
 > against your nixpkgs.
-
-### Using Overlay
-
-Alternatively, use an overlay to access packages under the `llm-agents`
-namespace. Two are provided:
-
-- `overlays.default` exposes `packages.${system}` as-is. Packages are built
-  against this flake's pinned nixpkgs, so the [binary cache](#binary-cache)
-  hits regardless of your nixpkgs revision, at the cost of evaluating a second
-  nixpkgs instance.
-- `overlays.shared-nixpkgs` rebuilds each package against **your** nixpkgs, so
-  dependencies are shared with the rest of your system and no extra nixpkgs is
-  evaluated. The binary cache will only hit when your nixpkgs revision matches
-  ours.
-
-```nix
-{
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    llm-agents.url = "github:numtide/llm-agents.nix";
-  };
-
-  outputs = { nixpkgs, llm-agents, ... }: {
-    # NixOS / nix-darwin configuration
-    nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [{
-        nixpkgs.overlays = [ llm-agents.overlays.default ];
-        environment.systemPackages = [
-          pkgs.llm-agents.claude-code
-          pkgs.llm-agents.codex
-          pkgs.llm-agents.gemini-cli
-        ];
-      }];
-    };
-  };
-}
-```
 
 ### Try Without Installing
 
