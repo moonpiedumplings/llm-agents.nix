@@ -370,6 +370,16 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 - **Nix**: [packages/vix/package.nix](packages/vix/package.nix)
 
 </details>
+<details>
+<summary><strong>zaly</strong> - Hackable terminal coding agent</summary>
+
+- **Source**: bytecode
+- **License**: MIT
+- **Homepage**: https://github.com/folke/zaly
+- **Usage**: `nix run github:numtide/llm-agents.nix#zaly -- --help`
+- **Nix**: [packages/zaly/package.nix](packages/zaly/package.nix)
+
+</details>
 
 ### AI Assistants
 
