@@ -109,6 +109,7 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
     ruamel-yaml
     toml
     tomlkit
+    truststore
     watchdog
   ];
 
